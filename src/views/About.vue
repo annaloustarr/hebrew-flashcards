@@ -1,5 +1,6 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <p>This is an app for everyone to learn Hebrew.</p>
+    <p>You must be a student at Citizen Cafe to add cards to the deck!</p>
   </div>
 </template>
