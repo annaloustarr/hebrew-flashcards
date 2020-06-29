@@ -1,13 +1,5 @@
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
-import axios from "axios";
-import firebase from "firebase/app";
+import * as firebase from "firebase";
 import "firebase/firestore";
-
-Vue.prototype.$axios = axios;
-Vue.config.productionTip = false;
 
 const firebaseConfig = {
   apiKey: "AIzaSyDI8NDPjtj1P14boROVarhcmy8qjnAhDAA",
@@ -21,19 +13,7 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-// firebase.analytics();
+firebase.analytics();
 const db = firebase.firestore();
+
 export default db;
-
-let app;
-
-firebase.auth().onAuthStateChanged((user) => {
-  user;
-  if (!app) {
-    app = new Vue({
-      router,
-      store,
-      render: (h) => h(App),
-    }).$mount("#app");
-  }
-});

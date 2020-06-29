@@ -3,32 +3,66 @@
     <div class="card-container">
       <div class="card">
         <div class="front">
-          <div class="eng">English</div>
+          <div class="eng">{{this.currentCard.eng}}</div>
         </div>
         <div class="back">
-          <div class="heb">עברית</div>
+          <div class="heb">{{this.currentCard.heb}}</div>
         </div>
       </div>
     </div>
-    <button class="btn" onclick="{}">Draw Card</button>
+    <div>
+      <button class="btn" @click="getRandomCard">Next Card</button>
+    </div>
+    <div>
+      <router-link
+        class="btn"
+        v-if="typeof this.currentCard.id !== 'undefined'"
+        v-bind:to="{name: 'update', params : {card_id: this.currentCard.id}}"
+        tag="button"
+      >Update Card</router-link>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-
+import db from "../main";
 export default {
   name: "Home",
-  components: {
-    // HelloWorld
+  data() {
+    return {
+      cards: [],
+      currentCard: {}
+    };
+  },
+  created() {
+    db.collection("darkgreen")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const data = {
+            id: doc.id,
+            eng: doc.data().eng,
+            heb: doc.data().heb
+          };
+          this.cards.push(data);
+
+          this.getRandomCard();
+        });
+      });
+  },
+  methods: {
+    getRandomCard() {
+      const cards = this.cards;
+      this.currentCard = cards[Math.floor(Math.random() * cards.length)];
+      console.log(this.currentCard.id);
+    }
   }
 };
 </script>
 <style scoped>
 .card-container {
   cursor: pointer;
-  height: 360px;
+  height: 260px;
   width: 360px;
   perspective: 900px;
   position: relative;
@@ -37,7 +71,7 @@ export default {
 }
 
 .card {
-  height: 360px;
+  height: 260px;
   width: 360px;
   position: absolute;
   border: 1px solid #300;
@@ -51,7 +85,7 @@ export default {
 }
 
 .card .front {
-  height: 360px;
+  height: 260px;
   width: 360px;
   backface-visibility: hidden;
   position: absolute;
@@ -61,7 +95,7 @@ export default {
 }
 
 .card .back {
-  height: 360px;
+  height: 260px;
   width: 360px;
   text-align: center;
   transform: rotateY(180deg);
@@ -69,14 +103,16 @@ export default {
 
 .eng {
   color: #333;
-  font-size: 2.3em;
-  padding-top: 40%;
+  font-size: 32px;
+  padding: 16px;
+  padding-top: 10%;
 }
 
 .heb {
   color: #333;
-  font-size: 4.3em;
-  padding-top: 20%;
+  font-size: 38px;
+  padding: 16px;
+  padding-top: 10%;
 }
 .btn {
   margin-top: 20px;

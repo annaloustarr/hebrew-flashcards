@@ -6,7 +6,8 @@
       <router-link to="/about">About</router-link>|
       <router-link to="/register">Register</router-link>|
       <router-link to="/login">Login</router-link>|
-      <router-link to="/secret">Add</router-link>
+      <router-link to="/add">Add</router-link>|
+      <router-link to="/update">Update</router-link>
     </div>
     <router-view />
     <top-header></top-header>
@@ -34,6 +35,9 @@ export default {
 #nav a {
   font-weight: bold;
   color: #2c3e50;
+  padding: 4px;
+  padding-right: 8px;
+  text-decoration: none;
 }
 
 #nav a.router-link-exact-active {

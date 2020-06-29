@@ -3,7 +3,8 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
-import Secret from "../views/Secret.vue";
+import Add from "../views/Add.vue";
+import Update from "../views/Update.vue";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
@@ -16,9 +17,15 @@ const routes = [
     component: Home,
   },
   {
-    path: "/secret",
-    name: "secret",
-    component: Secret,
+    path: "/add",
+    name: "add",
+    component: Add,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/update/:card_id",
+    name: "update",
+    component: Update,
     meta: { requiresAuth: true },
   },
   {
