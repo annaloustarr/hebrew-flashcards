@@ -54,7 +54,7 @@ export default {
     getRandomCard() {
       const cards = this.cards;
       this.currentCard = cards[Math.floor(Math.random() * cards.length)];
-      console.log(this.currentCard.id);
+      // console.log(this.currentCard.id);
     }
   }
 };

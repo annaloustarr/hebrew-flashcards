@@ -1,8 +1,28 @@
 <template>
   <div>
-    Update flashcards here
-    {{this.eng}}
-    {{this.heb}}
+    <div>
+      <div class="card">
+        <div class="front card-container">
+          <!-- <div class="eng">{{this.eng}}</div> -->
+          <form>
+            <textarea class="eng-input" type="text" placeholder="English" v-model="eng" required />
+          </form>
+          <button class="btn" @click="updateEng">Edit</button>
+        </div>
+        <div class="back card-container">
+          <form>
+            <textarea class="heb-input" type="text" placeholder="Hebrew" v-model="heb" required />
+          </form>
+          <button class="btn" @click="updateHeb">Edit</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="btn" @click="deleteCard">Delete</button>
+    </div>
+    <div>
+      <router-link class="btn" v-bind:to="{name: 'home'}" tag="button">Back</router-link>
+    </div>
   </div>
 </template>
 
@@ -27,46 +47,127 @@ export default {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.id);
-          console.log("params", this.$route.params.card_id);
           this.id = doc.id;
           this.eng = doc.data().eng;
           this.heb = doc.data().heb;
         });
-        console.log("can I see", this.eng, this.heb);
       });
+  },
+  methods: {
+    deleteCard() {
+      if (confirm("Are you sure?")) {
+        db.collection("darkgreen")
+          .where(
+            firebase.firestore.FieldPath.documentId(),
+            "==",
+            this.$route.params.card_id
+          )
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              doc.ref.delete();
+              if (confirm("card deleted")) {
+                this.$router.push({ path: "/" });
+              }
+            });
+          });
+      }
+    },
+    updateEng() {
+      if (confirm("Are you sure?")) {
+        db.collection("darkgreen")
+          .where(
+            firebase.firestore.FieldPath.documentId(),
+            "==",
+            this.$route.params.card_id
+          )
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              doc.ref.update({ eng: this.eng });
+              if (confirm("card updated")) {
+                this.$router.push({ path: "/" });
+              }
+            });
+          });
+      }
+    },
+    updateHeb() {
+      if (confirm("Are you sure?")) {
+        db.collection("darkgreen")
+          .where(
+            firebase.firestore.FieldPath.documentId(),
+            "==",
+            this.$route.params.card_id
+          )
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              doc.ref.update({ heb: this.heb });
+              if (confirm("card updated")) {
+                this.$router.push({ path: "/" });
+              }
+            });
+          });
+      }
+    }
   }
-  //   beforeRouteEnter(to, from, next) {
-  //     db.collection("darkgreen")
-  //       .where("doc.id", "==", to.params.card_id)
-  //       .get()
-  //       .then(querySnapshot => {
-  //         querySnapshot.forEach(doc => {
-  //           next(vm => {
-  //             vm.eng = doc.data.eng;
-  //             vm.heb = doc.data.heb;
-  //           });
-  //         });
-  //       });
-  //   },
-  //   watch: {
-  //     $route: "fetchData"
-  //   },
-  //   methods: {
-  //     fetchData() {
-  //       db.collection("darkgreen")
-  //         .where("doc.id", "==", this.$route.params.card_id)
-  //         .get()
-  //         .then(querySnapshot => {
-  //           querySnapshot.forEach(doc => {
-  //             this.eng = doc.data().eng;
-  //             this.heb = doc.data().heb;
-  //           });
-  //         });
-  //     }
-  //   }
 };
 </script>
 
 <style scoped>
+.card-container {
+  cursor: pointer;
+  height: 260px;
+  width: 360px;
+  perspective: 900px;
+  position: relative;
+  margin: auto;
+}
+
+.card .front {
+  height: 260px;
+  width: 360px;
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid #300;
+  background-color: rgba(255, 248, 248, 1);
+}
+
+.card .back {
+  margin-top: 10px;
+  height: 260px;
+  width: 360px;
+  text-align: center;
+  border: 1px solid #300;
+}
+.eng-input {
+  color: #333;
+  font-size: 32px;
+  padding: 16px;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  text-align: center;
+  outline: none;
+  margin-top: 10%;
+  border: none;
+  background-color: rgba(255, 248, 248, 1);
+}
+
+.heb-input {
+  color: #333;
+  font-size: 32px;
+  padding: 16px;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  text-align: center;
+  outline: none;
+  margin-top: 10%;
+  border: none;
+}
+.btn {
+  margin-top: 20px;
+}
 </style>

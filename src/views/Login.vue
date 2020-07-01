@@ -3,12 +3,12 @@
     <form @submit.prevent="pressed">
       Login
       <div class="login">
-        <input type="email" v-model="email" placeholder="login" />
+        <input type="email" v-model="email" placeholder="email" />
       </div>
       <div class="password">
         <input type="password" v-model="password" placeholder="password" />
       </div>
-      <button type="submit">Login</button>
+      <button class="button" type="submit">Enter</button>
     </form>
     <div class="error" v-if="error">{{error.message}}</div>
     <span>
@@ -32,11 +32,10 @@ export default {
   methods: {
     async pressed() {
       try {
-        const val = await firebase
+        await firebase
           .auth()
           .signInWithEmailAndPassword(this.email, this.password);
-        console.log(val);
-        this.$router.replace({ name: "secret" });
+        this.$router.replace({ name: "home" });
       } catch (err) {
         console.log(err);
       }
@@ -45,5 +44,12 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style scoped>
+.login,
+.password {
+  padding-bottom: 4px;
+}
+.button {
+  margin-bottom: 4px;
+}
 </style>

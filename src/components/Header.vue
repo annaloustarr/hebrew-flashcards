@@ -1,11 +1,11 @@
 <template>
   <div class="header">
-    Logged in -
-    <span v-if="loggedIn">Yes</span>
-    <span v-else>No</span>
-    <div>
-      <button class="but" @click="signOut">Sign out</button>
-    </div>
+    <span v-if="loggedIn">
+      <span class="purple" @click="signOut">Log Out</span>
+    </span>
+    <span v-else>
+      <router-link to="/login">Login</router-link>
+    </span>
   </div>
 </template>
 
@@ -44,5 +44,15 @@ export default {
 <style scoped>
 .header {
   margin-top: 20px;
+  font-weight: bold;
+  color: #2c3e50;
+  padding: 4px;
+  padding-right: 8px;
+}
+.header a {
+  text-decoration: none;
+}
+.purple {
+  color: rgb(95, 14, 95);
 }
 </style>
