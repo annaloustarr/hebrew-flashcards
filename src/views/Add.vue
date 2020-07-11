@@ -4,24 +4,45 @@
       <div>
         <div class="card">
           <div class="front card-container">
-            <textarea class="eng-input" type="text" placeholder="English" v-model="eng" required />
+            <textarea
+              class="eng-input"
+              type="text"
+              placeholder="English"
+              v-model="eng"
+              required
+            />
             <p v-if="engError">
-              <b>{{engError}}</b>
+              <b>{{ engError }}</b>
             </p>
           </div>
           <div class="back card-container">
-            <textarea class="heb-input" type="text" placeholder="Hebrew" v-model="heb" required />
+            <textarea
+              class="heb-input"
+              type="text"
+              placeholder="Hebrew"
+              v-model="heb"
+              required
+            />
             <p v-if="hebError">
-              <b>{{hebError}}</b>
+              <b>{{ hebError }}</b>
             </p>
           </div>
         </div>
       </div>
       <div>
-        <button class="btn" type="submit">Submit</button>
+        <b-button variant="outline-dark" size="sm" class="button" type="submit"
+          >Submit</b-button
+        >
       </div>
       <div>
-        <router-link class="btn" v-bind:to="{name: 'home'}" tag="button">Back</router-link>
+        <b-button
+          variant="outline-dark"
+          size="sm"
+          class="button"
+          v-bind:to="{ name: 'home' }"
+          tag="button"
+          >Back</b-button
+        >
       </div>
     </form>
   </div>
@@ -35,14 +56,14 @@ export default {
       eng: "",
       heb: "",
       engError: "",
-      hebError: ""
+      hebError: "",
     };
   },
   methods: {
     saveCard() {
       const newCard = {
         eng: this.eng,
-        heb: this.heb
+        heb: this.heb,
       };
       db.collection("darkgreen")
         .add(newCard)
@@ -50,13 +71,13 @@ export default {
           confirm("card added");
           this.$router.push("/");
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
     },
     validateEng(value) {
       if (value.length == 0) {
         this.engError = "Enter an English word";
-      } else if (value.length > 50) {
-        this.engError = "must be less than 50 characters";
+      } else if (value.length > 70) {
+        this.engError = "must be less than 70 characters";
       } else {
         this.engError = "";
       }
@@ -64,31 +85,30 @@ export default {
     validateHeb(value) {
       if (value.length == 0) {
         this.hebError = "Enter an Hebrew word";
-      } else if (value.length > 50) {
-        this.hebError = "must be less than 50 characters";
+      } else if (value.length > 70) {
+        this.hebError = "must be less than 70 characters";
       } else {
         this.hebError = "";
       }
-    }
+    },
   },
   watch: {
     eng(value) {
-      // binding this to the data value in the email input
       this.eng = value;
       this.validateEng(value);
     },
     heb(value) {
       this.heb = value;
       this.validateHeb(value);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
 .card-container {
   cursor: pointer;
-  height: 260px;
+  height: 240px;
   width: 360px;
   perspective: 900px;
   position: relative;
@@ -96,8 +116,8 @@ export default {
 }
 
 .card .front {
-  height: 260px;
-  width: 360px;
+  height: 240px;
+  width: 320px;
   overflow: hidden;
   text-align: center;
   border: 1px solid #300;
@@ -106,8 +126,9 @@ export default {
 
 .card .back {
   margin-top: 10px;
-  height: 260px;
-  width: 360px;
+  height: 240px;
+  width: 320px;
+  overflow: hidden;
   text-align: center;
   border: 1px solid #300;
 }
@@ -123,6 +144,7 @@ export default {
   margin-top: 10%;
   border: none;
   background-color: rgba(255, 248, 248, 1);
+  width: 300px;
 }
 .heb-input {
   color: #333;
@@ -135,8 +157,10 @@ export default {
   outline: none;
   margin-top: 10%;
   border: none;
+  background-color: white;
+  width: 300px;
 }
-.btn {
+.button {
   margin-top: 20px;
 }
 </style>

@@ -8,12 +8,14 @@
       <div class="password">
         <input type="password" v-model="password" placeholder="password" />
       </div>
-      <button class="button" type="submit">Enter</button>
+      <b-button variant="outline-dark" size="sm" class="button" type="submit"
+        >Enter</b-button
+      >
     </form>
-    <div class="error" v-if="error">{{error.message}}</div>
+    <div class="error" v-if="error">{{ error.message }}</div>
     <span>
       Need an account? Click here to
-      <router-link to="/register">register</router-link>
+      <router-link to="/register" class="underline">Register</router-link>
     </span>
   </div>
 </template>
@@ -26,7 +28,7 @@ export default {
     return {
       email: "",
       password: "",
-      error: ""
+      error: "",
     };
   },
   methods: {
@@ -39,8 +41,8 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -50,6 +52,9 @@ export default {
   padding-bottom: 4px;
 }
 .button {
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+}
+.underline {
+  text-decoration: none;
 }
 </style>

@@ -4,24 +4,53 @@
       <div class="card">
         <div class="front card-container">
           <!-- <div class="eng">{{this.eng}}</div> -->
-          <form>
-            <textarea class="eng-input" type="text" placeholder="English" v-model="eng" required />
-          </form>
-          <button class="btn" @click="updateEng">Edit</button>
+          <!-- <form> -->
+          <textarea
+            class="eng-input"
+            type="text"
+            placeholder="English"
+            v-model="eng"
+            required
+          />
+          <!-- </form> -->
+          <b-button variant="outline-dark" size="sm" @click="updateEng"
+            >Edit</b-button
+          >
         </div>
         <div class="back card-container">
-          <form>
-            <textarea class="heb-input" type="text" placeholder="Hebrew" v-model="heb" required />
-          </form>
-          <button class="btn" @click="updateHeb">Edit</button>
+          <!-- <form> -->
+          <textarea
+            class="heb-input"
+            type="text"
+            placeholder="Hebrew"
+            v-model="heb"
+            required
+          />
+          <!-- </form> -->
+          <b-button variant="outline-dark" size="sm" @click="updateHeb"
+            >Edit</b-button
+          >
         </div>
       </div>
     </div>
     <div>
-      <button class="btn" @click="deleteCard">Delete</button>
+      <b-button
+        variant="outline-dark"
+        size="sm"
+        class="button"
+        @click="deleteCard"
+        >Delete</b-button
+      >
     </div>
     <div>
-      <router-link class="btn" v-bind:to="{name: 'home'}" tag="button">Back</router-link>
+      <b-button
+        variant="outline-dark"
+        size="sm"
+        class="button"
+        v-bind:to="{ name: 'home' }"
+        tag="button"
+        >Back</b-button
+      >
     </div>
   </div>
 </template>
@@ -34,7 +63,7 @@ export default {
     return {
       id: "",
       eng: "",
-      heb: ""
+      heb: "",
     };
   },
   created() {
@@ -45,8 +74,8 @@ export default {
         this.$route.params.card_id
       )
       .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
           this.id = doc.id;
           this.eng = doc.data().eng;
           this.heb = doc.data().heb;
@@ -63,8 +92,8 @@ export default {
             this.$route.params.card_id
           )
           .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
               doc.ref.delete();
               if (confirm("card deleted")) {
                 this.$router.push({ path: "/" });
@@ -82,8 +111,8 @@ export default {
             this.$route.params.card_id
           )
           .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
               doc.ref.update({ eng: this.eng });
               if (confirm("card updated")) {
                 this.$router.push({ path: "/" });
@@ -101,8 +130,8 @@ export default {
             this.$route.params.card_id
           )
           .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
               doc.ref.update({ heb: this.heb });
               if (confirm("card updated")) {
                 this.$router.push({ path: "/" });
@@ -110,15 +139,15 @@ export default {
             });
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
 .card-container {
   cursor: pointer;
-  height: 260px;
+  height: 240px;
   width: 360px;
   perspective: 900px;
   position: relative;
@@ -126,8 +155,8 @@ export default {
 }
 
 .card .front {
-  height: 260px;
-  width: 360px;
+  height: 240px;
+  width: 320px;
   overflow: hidden;
   text-align: center;
   border: 1px solid #300;
@@ -136,10 +165,12 @@ export default {
 
 .card .back {
   margin-top: 10px;
-  height: 260px;
-  width: 360px;
+  height: 240px;
+  width: 320px;
+  overflow: hidden;
   text-align: center;
   border: 1px solid #300;
+  background-color: white;
 }
 .eng-input {
   color: #333;
@@ -153,6 +184,7 @@ export default {
   margin-top: 10%;
   border: none;
   background-color: rgba(255, 248, 248, 1);
+  width: 300px;
 }
 
 .heb-input {
@@ -166,8 +198,10 @@ export default {
   outline: none;
   margin-top: 10%;
   border: none;
+  background-color: white;
+  width: 300px;
 }
-.btn {
+.button {
   margin-top: 20px;
 }
 </style>

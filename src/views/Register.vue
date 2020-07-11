@@ -9,7 +9,9 @@
       <div class="password">
         <input type="password" v-model="password" placeholder="password" />
       </div>
-      <button type="submit">Register</button>
+      <b-button variant="outline-dark" size="sm" class="button" type="submit"
+        >Register</b-button
+      >
     </form>
   </div>
 </template>
@@ -22,7 +24,7 @@ export default {
     return {
       email: "",
       password: "",
-      error: ""
+      error: "",
     };
   },
   methods: {
@@ -36,25 +38,17 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-.error {
-  color: red;
-  font-size: 18px;
+.email,
+.password {
+  padding-bottom: 4px;
 }
-/* input {
-  width: 400px;
-  padding: 30px;
-  margin: 20px;
-  font-size: 21px;
+.button {
+  margin-bottom: 8px;
 }
-button {
-  width: 400px;
-  height: 75px;
-  font-size: 100%;
-} */
 </style>
